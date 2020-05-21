@@ -34,7 +34,7 @@ process sayHelloInItalian {
     val (output) from 'italian.txt'
 
   output:
-    path('italian.txt') into italian_ch
+    path("${output}") into italian_ch
 
   shell:
     template 'hello.sh'
@@ -48,7 +48,7 @@ process sayHelloInFrench {
     val (output) from 'french.txt'
 
   output:
-    path('french.txt') into french_ch
+    path("${output}") into french_ch
 
   shell:
     template 'hello.sh'
@@ -64,7 +64,7 @@ process sayHelloInSpanish {
 
 
   output:
-    path('spanish.txt') into spanish_ch
+    path("${output}") into spanish_ch
 
   shell:
     template 'hello.sh'
@@ -78,7 +78,7 @@ process sayHelloInEnglish {
     val (output) from 'english.txt'
 
   output:
-    path('english.txt') into english_ch
+    path("${output}") into english_ch
 
   shell:
     template 'hello.sh'
