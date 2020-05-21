@@ -13,7 +13,7 @@ At the end of the execution, the content of the final file is shown.
 # Execution
 Clone the project and run:
 
-    nextflow run main.nf -profile local/sge 
+    nextflow run main.nf -profile [local|cluster] 
 
 or with [pipeline sharing](https://www.nextflow.io/docs/latest/en/latest/sharing.html), just run:
     
