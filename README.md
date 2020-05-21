@@ -22,14 +22,17 @@ or with [pipeline sharing](https://www.nextflow.io/docs/latest/en/latest/sharing
 # Output
     
 ``` bash
-$ nextflow run manuelesimi/hello-nextflow 
+$ nextflow run manuelesimi/hello-nextflow
+
 N E X T F L O W  ~  version 20.01.0
-Launching `main.nf` [dreamy_leavitt] - revision: 1033119485
+Pulling manuelesimi/hello-nextflow ...
+downloaded from https://github.com/manuelesimi/hello-nextflow.git
+Launching `manuelesimi/hello-nextflow` [romantic_roentgen] - revision: ec3621d2c9 [master]
 executor >  local (4)
-[d1/fc17d2] process > sayHelloInItalian [100%] 1 of 1 ✔
-[1e/0fd617] process > sayHelloInFrench  [100%] 1 of 1 ✔
-[97/bfa94e] process > sayHelloInSpanish [100%] 1 of 1 ✔
-[70/0d920b] process > sayHelloInEnglish [100%] 1 of 1 ✔
+[ce/b6e6c2] process > sayHelloInItalian [100%] 1 of 1 ✔
+[6e/0a170c] process > sayHelloInFrench  [100%] 1 of 1 ✔
+[55/b05258] process > sayHelloInSpanish [100%] 1 of 1 ✔
+[f9/650a7c] process > sayHelloInEnglish [100%] 1 of 1 ✔
 Nextflow says:
 --- Welcome ---
 Ciao world!
