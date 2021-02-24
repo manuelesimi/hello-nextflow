@@ -14,86 +14,76 @@
 import java.nio.file.Files
 import java.nio.file.Paths
 
-def input_filename = 'welcome.txt'
-def output_filename = 'all.txt'
+def final_output_file = 'All.txt'
+italian = Channel.from 'Ciao'
+french = Channel.from 'Bonjour'
+english = Channel.from 'Hello'
+spanish = Channel.from 'Hola'
+start = Channel.fromPath 'Welcome.txt'
 
-if (new File(output_filename).exists())
-  new File(output_filename).delete()
-
-def welcomeFile = new File(input_filename)
-if (welcomeFile.exists())
-  welcomeFile.delete()
-welcomeFile.write('--- Welcome ---\n')
-
-input_ch = Channel.fromPath(input_filename)
+if (new File(final_output_file).exists())
+  new File(final_output_file).delete()
 
 process sayHelloInItalian {
-  input: 
-    val (x) from 'Ciao'
-    path (previous_file) from input_ch
-    val (output) from 'italian.txt'
+  input:
+  val (x) from italian
+  path (previous_file) from start
+  val (output) from 'italian.txt'
 
   output:
-    path("${output}") into italian_ch
+  path('italian.txt') into italian_ch
 
   shell:
-    template 'hello.sh'
+  template 'hello.sh'
 }
 
 process sayHelloInFrench {
-
   input:
-    val (x) from 'Bonjour'
-    path (previous_file) from italian_ch
-    val (output) from 'french.txt'
+  val (x) from french
+  path (previous_file) from italian_ch
+  val (output) from 'french.txt'
 
   output:
-    path("${output}") into french_ch
+  path('french.txt') into french_ch
 
   shell:
-    template 'hello.sh'
+  template 'hello.sh'
 }
 
 
 process sayHelloInSpanish {
-
   input:
-    val (x) from 'Hola'
-    path (previous_file) from french_ch
-    val (output) from 'spanish.txt'
+  val (x) from spanish
+  path (previous_file) from french_ch
+  val (output) from 'spanish.txt'
 
 
   output:
-    path("${output}") into spanish_ch
+  path('spanish.txt') into spanish_ch
 
   shell:
-    template 'hello.sh'
+  template 'hello.sh'
 }
 
 process sayHelloInEnglish {
-
   input:
-    val (x) from 'Hello'
-    path (previous_file) from spanish_ch
-    val (output) from 'english.txt'
+  val (x) from english
+  path (previous_file) from spanish_ch
+  val (output) from 'english.txt'
+
 
   output:
-    path("${output}") into english_ch
+  path('english.txt') into english_ch
 
   shell:
-    template 'hello.sh'
+  template 'hello.sh'
 }
 
 english_ch.subscribe { file ->
-  Files.copy(Paths.get(file.toString()), Paths.get(output_filename))
+  Files.copy(Paths.get(file.toString()), Paths.get(final_output_file))
 }
 
 workflow.onComplete {
   log.info "Nextflow says:"
-  log.info new File(output_filename).text
-}
-
-workflow.onError {
-  log.error "Something went wrong: ${workflow.errorMessage}"
-  log.error "${workflow.errorReport}"
+  log.info new File(final_output_file).text
 }
