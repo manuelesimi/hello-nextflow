@@ -11,15 +11,13 @@
 ----------------------------------------------------------------------------------------
 */
 
-import java.nio.file.Files
-import java.nio.file.Paths
 
 def final_output_file = 'All.txt'
 italian = Channel.from 'Ciao'
 french = Channel.from 'Bonjour'
 english = Channel.from 'Hello'
 spanish = Channel.from 'Hola'
-start = Channel.fromPath 'Welcome.txt'
+start = Channel.fromPath 'az://hellopipeline/input/welcome.txt'
 
 if (new File(final_output_file).exists())
   new File(final_output_file).delete()
@@ -66,6 +64,8 @@ process sayHelloInSpanish {
 }
 
 process sayHelloInEnglish {
+  publishDir 'az://hellopipeline/results/', mode: 'copy', overwrite: true
+
   input:
   val (x) from english
   path (previous_file) from spanish_ch
@@ -79,11 +79,7 @@ process sayHelloInEnglish {
   template 'hello.sh'
 }
 
-english_ch.subscribe { file ->
-  Files.copy(Paths.get(file.toString()), Paths.get(final_output_file))
-}
 
 workflow.onComplete {
-  log.info "Nextflow says:"
-  log.info new File(final_output_file).text
+  log.info "Nextflow says: THANKS!"
 }
